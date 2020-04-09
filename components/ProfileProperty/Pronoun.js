@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from '@codeday/topo/Input/Text';
 import FormControl, { Label } from '@codeday/topo/FormControl';
-import Text from '@codeday/topo/Text';
+import Text, { Link } from '@codeday/topo/Text';
 import Radio, { Group } from '@codeday/topo/Input/Radio';
 
 const CUSTOM = 'custom';
@@ -12,7 +12,7 @@ const defaultPronouns = {
   'they/them': 'they/them',
   'she/they': 'she/they',
   'he/they': 'he/they',
-  'None': 'prefer not to say',
+  unspecified: 'prefer not to say',
 };
 
 const Pronoun = ({ user, onChange }) => {
@@ -47,7 +47,17 @@ const Pronoun = ({ user, onChange }) => {
 
   return (
     <FormControl>
-      <Label fontWeight="bold">Which pronouns do you use?<a href="https://www.glsen.org/activity/pronouns-guide-glsen"><sup>What's this?</sup></a></Label>
+      <Label fontWeight="bold">
+        Which pronouns do you use?&nbsp;
+        <Link
+          color="gray.700"
+          fontWeight="normal"
+          target="_blank"
+          href="https://www.glsen.org/activity/pronouns-guide-glsen"
+        >
+          <sup>(what&apos;s this?)</sup>
+        </Link>
+      </Label>
       <Group
         value={selection}
         onChange={(e) => {
