@@ -47,7 +47,7 @@ const Pronoun = ({ user, onChange }) => {
 
   return (
     <FormControl>
-      <Label fontWeight="bold">Which pronoun do you use?<a href="https://www.glsen.org/activity/pronouns-guide-glsen"><sup>What's this?</sup></a></Label>
+      <Label fontWeight="bold">Which pronouns do you use?<a href="https://www.glsen.org/activity/pronouns-guide-glsen"><sup>What's this?</sup></a></Label>
       <Group
         value={selection}
         onChange={(e) => {
