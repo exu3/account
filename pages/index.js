@@ -1,203 +1,97 @@
-import Head from 'next/head'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import Text, { Heading } from '@codeday/topo/Text';
+import Box from '@codeday/topo/Box';
+import Button from '@codeday/topo/Button';
+import Divider from '@codeday/topo/Divider';
+import Alert, { Title as AlertTitle, Icon as AlertIcon } from '@codeday/topo/Alert';
+import WavingHand from '@codeday/topocons/Emoji/People/WavingHand';
+import SubmitUpdates from '../components/SubmitUpdates';
+import Page from '../components/Page';
+import ProfileBlocks from '../components/ProfileBlocks';
+import loginApi from '../lib/login';
+import { getSites } from '../utils/contentful';
 
-const Home = () => (
-  <div className="container">
-    <Head>
-      <title>Create Next App</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+export const getServerSideProps = async ({ req, res }) => {
+  const session = await loginApi.getSession(req);
 
-    <main>
-      <h1 className="title">
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
-      </h1>
+  if (!session || !session.user) {
+    res.writeHead(302, {
+      Location: '/api/login',
+    });
+    res.end();
+    return { props: {} };
+  }
 
-      <p className="description">
-        Get started by editing <code>pages/index.js</code>
-      </p>
+  // eslint-disable-next-line global-require
+  const { managementApi } = require('../lib/auth0');
+  const id = session.user.sub;
+  const user = await managementApi.getUser({ id }); // Get the latest profile (OAuth only returns the profile at login)
 
-      <div className="grid">
-        <a href="https://nextjs.org/docs" className="card">
-          <h3>Documentation &rarr;</h3>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+  return {
+    props: {
+      user,
+      sites: await getSites(['Student', user.user_metadata.volunteer && 'Staff']),
+    },
+  };
+};
 
-        <a href="https://nextjs.org/learn" className="card">
-          <h3>Learn &rarr;</h3>
-          <p>Learn about Next.js in an interactive course with quizzes!</p>
-        </a>
-
-        <a
-          href="https://github.com/zeit/next.js/tree/master/examples"
-          className="card"
-        >
-          <h3>Examples &rarr;</h3>
-          <p>Discover and deploy boilerplate example Next.js projects.</p>
-        </a>
-
-        <a
-          href="https://zeit.co/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className="card"
-        >
-          <h3>Deploy &rarr;</h3>
-          <p>
-            Instantly deploy your Next.js site to a public URL with ZEIT Now.
-          </p>
-        </a>
-      </div>
-    </main>
-
-    <footer>
-      <a
-        href="https://zeit.co?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
-      </a>
-    </footer>
-
-    <style jsx>{`
-      .container {
-        min-height: 100vh;
-        padding: 0 0.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      main {
-        padding: 5rem 0;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      footer {
-        width: 100%;
-        height: 100px;
-        border-top: 1px solid #eaeaea;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      footer img {
-        margin-left: 0.5rem;
-      }
-
-      footer a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .title a {
-        color: #0070f3;
-        text-decoration: none;
-      }
-
-      .title a:hover,
-      .title a:focus,
-      .title a:active {
-        text-decoration: underline;
-      }
-
-      .title {
-        margin: 0;
-        line-height: 1.15;
-        font-size: 4rem;
-      }
-
-      .title,
-      .description {
-        text-align: center;
-      }
-
-      .description {
-        line-height: 1.5;
-        font-size: 1.5rem;
-      }
-
-      code {
-        background: #fafafa;
-        border-radius: 5px;
-        padding: 0.75rem;
-        font-size: 1.1rem;
-        font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-      }
-
-      .grid {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-
-        max-width: 800px;
-        margin-top: 3rem;
-      }
-
-      .card {
-        margin: 1rem;
-        flex-basis: 45%;
-        padding: 1.5rem;
-        text-align: left;
-        color: inherit;
-        text-decoration: none;
-        border: 1px solid #eaeaea;
-        border-radius: 10px;
-        transition: color 0.15s ease, border-color 0.15s ease;
-      }
-
-      .card:hover,
-      .card:focus,
-      .card:active {
-        color: #0070f3;
-        border-color: #0070f3;
-      }
-
-      .card h3 {
-        margin: 0 0 1rem 0;
-        font-size: 1.5rem;
-      }
-
-      .card p {
-        margin: 0;
-        font-size: 1.25rem;
-        line-height: 1.5;
-      }
-
-      @media (max-width: 600px) {
-        .grid {
-          width: 100%;
-          flex-direction: column;
-        }
-      }
-    `}</style>
-
-    <style jsx global>{`
-      html,
-      body {
-        padding: 0;
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-          Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-    `}</style>
-  </div>
-)
-
-export default Home
+const User = ({ user, sites }) => {
+  const [error, setError] = useState();
+  const [request, setRequest] = useState({});
+  return (
+    <Page isLoggedIn>
+      <Text>
+        <WavingHand /> Welcome back, <Text bold as="span">{user.given_name}!</Text> Here are some things you can access
+        with your CodeDay account:
+      </Text>
+      <Box paddingTop={4} paddingBottom={4}>
+        {sites.map((site) => (
+          <Button
+            marginRight={3}
+            marginBottom={3}
+            as="a"
+            variant="outline"
+            href={site.link}
+            target="_blank"
+          >
+            {site.title}
+          </Button>
+        ))}
+      </Box>
+      <Divider />
+      <Heading as="h2" size="lg" paddingTop={4}>Update Your Account</Heading>
+      {error && (
+        <Alert status="error">
+          <AlertIcon />
+          <AlertTitle>{error}</AlertTitle>
+        </Alert>
+      )}
+      <ProfileBlocks
+        user={user}
+        fields={[
+          'username',
+          'given_name',
+          'family_name',
+          'user_metadata.pronoun',
+          'user_metadata.phone_number',
+          'user_metadata.volunteer',
+        ]}
+        onChange={setRequest}
+      />
+      <Box textAlign="right">
+        <SubmitUpdates
+          required={['username', 'given_name', 'family_name', 'user_metadata.pronoun']}
+          user={user}
+          request={request}
+          onError={setError}
+        />
+      </Box>
+    </Page>
+  );
+};
+User.propTypes = {
+  user: PropTypes.object.isRequired,
+  sites: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+export default User;

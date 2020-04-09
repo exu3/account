@@ -8,8 +8,25 @@
     "start": "next start"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^0.11.0",
+    "@codeday/topo": "^1.2.0",
+    "@codeday/topocons": "^1.3.0",
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
+    "auth0": "^2.24.0",
+    "axios": "^0.19.2",
+    "deepmerge": "^4.2.2",
+    "emotion-theming": "^10.0.27",
+    "jsonwebtoken": "^8.5.1",
     "next": "9.3.4",
+    "nextjs-redirect": "^2.0.1",
+    "phone": "^2.4.8",
+    "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-dom": "16.13.1"
+  },
+  "devDependencies": {
+    "@codeday/eslint-config": "^1.3.0",
+    "eslint": "^6.8.0"
   }
 }
