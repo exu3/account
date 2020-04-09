@@ -12,7 +12,7 @@ const defaultPronouns = {
   'they/them': 'they/them',
   'she/they': 'she/they',
   'he/they': 'he/they',
-  'prefer not to say': 'prefer not to say',
+  'None': 'prefer not to say',
 };
 
 const Pronoun = ({ user, onChange }) => {
@@ -47,7 +47,7 @@ const Pronoun = ({ user, onChange }) => {
 
   return (
     <FormControl>
-      <Label fontWeight="bold">Which pronoun do you use?</Label>
+      <Label fontWeight="bold">Which pronoun do you use?<a href="https://www.glsen.org/activity/pronouns-guide-glsen"><sup>What's this?</sup></a></Label>
       <Group
         value={selection}
         onChange={(e) => {
