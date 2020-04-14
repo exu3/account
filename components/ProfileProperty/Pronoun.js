@@ -12,6 +12,7 @@ const defaultPronouns = {
   'they/them': 'they/them',
   'she/they': 'she/they',
   'he/they': 'he/they',
+  'it/its': 'it/its',
   unspecified: 'prefer not to say',
 };
 
