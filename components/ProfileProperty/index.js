@@ -18,7 +18,7 @@ export default (fields) => {
         ? e.provides.includes(field)
         : e.provides === field
     )))
-    .reduce((accum, arr) => [...accum, ...arr])
+    .reduce((accum, arr) => [...accum, ...arr], [])
     .filter((elem) => {
       const wasSeen = seenProviders.includes(Array.isArray(elem.provides) ? elem.provides[0] : elem.provides);
       if (Array.isArray(elem.provides)) seenProviders = [...seenProviders, ...elem.provides];

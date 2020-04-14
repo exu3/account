@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Input from '@codeday/topo/Input/Text';
 import Button from '@codeday/topo/Button';
 import Collapse from '@codeday/topo/Collapse';
-import FormControl, { Label } from '@codeday/topo/FormControl';
+import FormControl, { Label, HelpText } from '@codeday/topo/FormControl';
 
 const Volunteer = ({ user, onChange }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -37,6 +37,7 @@ const Volunteer = ({ user, onChange }) => {
             onChange({ _meta: { volunteer_code: e.target.value } });
           }}
         />
+        <HelpText>You can get this from your staff contact.</HelpText>
       </Collapse>
     </FormControl>
   );
