@@ -5,6 +5,12 @@ module.exports = {
       clientSecret: process.env.AUTH0_CLIENT_SECRET,
       hookSharedSecret: process.env.AUTH0_HOOK_SHARED_SECRET,
       managementDomain: process.env.AUTH0_MANAGEMENT_DOMAIN,
+      volunteerRole: process.env.AUTH0_VOLUNTEER_ROLE,
+    },
+    uploader: {
+      url: process.env.UPLOADER_URL,
+      secret: process.env.UPLOADER_SECRET,
+      allowedUrlPrefix: process.env.UPLOADER_ALLOWED_URL_PREFIX,
     },
     contentful: {
       spaceId: process.env.CONTENTFUL_SPACE_ID,

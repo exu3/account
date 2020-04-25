@@ -20,6 +20,7 @@ const cleanUpdates = (originalUser, originalBody) => {
   const user = JSON.parse(JSON.stringify(originalUser));
   if (!body.user_metadata) body.user_metadata = {};
   if (!user.user_metadata) user.user_metadata = {};
+  const roles = [];
 
   // Is the user trying to remove their name?
   if (user.given_name && !body.given_name && typeof body.given_name !== 'undefined') {
@@ -41,13 +42,21 @@ const cleanUpdates = (originalUser, originalBody) => {
     throw new Error('Username can only consist of letters, numbers, and _ or -.');
   }
 
+  // Check that the picture is from our domain
+  if (body.picture && body.picture.indexOf(serverRuntimeConfig.uploader.allowedUrlPrefix) !== 0) {
+    throw new Error(`Picture must be hosted on ${serverRuntimeConfig.uploader.allowedUrlPrefix}.`);
+  }
+
   // Check and normalize the phone number
   if (body.user_metadata.phone_number) {
     body.user_metadata.phone_number = phone(body.user_metadata.phone_number)[0];
   }
+
+  // Check if they should become a volunteer
   if (body._meta && body._meta.volunteer_code) {
-    if (body._meta.volunteer_code === serverRuntimeConfig.volunteerCode) body.user_metadata.volunteer = true;
-    else throw new Error(`${body._meta.volunteer_code} is not a volunteer code.`);
+    if (serverRuntimeConfig.volunteerCode.split(/,/g).includes(body._meta.volunteer_code)) {
+      roles.push(serverRuntimeConfig.auth0.volunteerRole);
+    } else throw new Error(`${body._meta.volunteer_code} is not a volunteer code.`);
   }
 
   // If we're changing the given_name or family_name, also update name, otherwise disable name changes.
@@ -56,16 +65,16 @@ const cleanUpdates = (originalUser, originalBody) => {
   } else delete body.name;
 
   const metadata = clearUndefined(Object.keys(body.user_metadata)
-    .filter((k) => ['pronoun', 'volunteer', 'accept_tos', 'phone_number'].includes(k))
+    .filter((k) => ['pronoun', 'accept_tos', 'phone_number'].includes(k))
     // eslint-disable-next-line no-param-reassign
     .reduce((accum, k) => { accum[k] = body.user_metadata[k]; return accum; }, {}));
 
   const data = clearUndefined(Object.keys(body)
-    .filter((k) => ['username', 'given_name', 'family_name', 'name'].includes(k))
+    .filter((k) => ['username', 'given_name', 'family_name', 'name', 'picture'].includes(k))
     // eslint-disable-next-line no-param-reassign
     .reduce((accum, k) => { accum[k] = body[k]; return accum; }, {}));
 
-  return { data, metadata };
+  return { data, metadata, roles };
 };
 
 export default async (req, res) => {
@@ -80,8 +89,9 @@ export default async (req, res) => {
   // Get the updates
   let data;
   let metadata;
+  let roles;
   try {
-    ({ data, metadata } = cleanUpdates(user, body));
+    ({ data, metadata, roles } = cleanUpdates(user, body));
   } catch (ex) {
     return res.status(400).send({ error: ex.message });
   }
@@ -95,6 +105,9 @@ export default async (req, res) => {
         ...user.metadata,
         ...metadata,
       });
+    }
+    if (Object.keys(roles).length > 0) {
+      await managementApi.assignRolestoUser({ id: userId }, { roles });
     }
 
     return res.send({ ok: true });

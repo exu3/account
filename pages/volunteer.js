@@ -9,15 +9,13 @@ import Page from '../components/Page';
 import ProfileBlocks from '../components/ProfileBlocks';
 import SubmitUpdates from '../components/SubmitUpdates';
 import { userFromJwt } from '../utils/profile';
+import refreshUser from '../utils/refresh-user';
 
 const { publicRuntimeConfig } = getConfig();
 
 export const getServerSideProps = async ({ query }) => {
   const jwtUser = userFromJwt(query.token);
-  // eslint-disable-next-line global-require
-  const { managementApi } = require('../lib/auth0');
-  const id = jwtUser.user_id;
-  const user = await managementApi.getUser({ id }); // Get the latest profile (OAuth only returns the profile at login)
+  const user = await refreshUser(jwtUser.user_id);
 
   return {
     props: {

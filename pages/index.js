@@ -10,6 +10,7 @@ import SubmitUpdates from '../components/SubmitUpdates';
 import Page from '../components/Page';
 import ProfileBlocks from '../components/ProfileBlocks';
 import loginApi from '../lib/login';
+import refreshUser from '../utils/refresh-user';
 import { getSites } from '../utils/contentful';
 
 export const getServerSideProps = async ({ req, res }) => {
@@ -23,15 +24,16 @@ export const getServerSideProps = async ({ req, res }) => {
     return { props: {} };
   }
 
-  // eslint-disable-next-line global-require
-  const { managementApi } = require('../lib/auth0');
-  const id = session.user.sub;
-  const user = await managementApi.getUser({ id }); // Get the latest profile (OAuth only returns the profile at login)
+  const user = await refreshUser(session.user.sub);
 
   return {
     props: {
       user,
-      sites: await getSites(['Student', user.user_metadata.volunteer && 'Staff']),
+      sites: await getSites([
+        'Student',
+        user.roles.volunteer && 'Volunteer',
+        user.roles.employee && 'Employee',
+      ]),
     },
   };
 };
@@ -71,11 +73,12 @@ const User = ({ user, sites }) => {
         user={user}
         fields={[
           'username',
+          'picture',
           'given_name',
           'family_name',
           'user_metadata.pronoun',
           'user_metadata.phone_number',
-          'user_metadata.volunteer',
+          'roles.volunteer',
         ]}
         onChange={setRequest}
       />

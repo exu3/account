@@ -9,7 +9,7 @@ const Volunteer = ({ user, onChange }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [volunteerCode, setVolunteerCode] = useState('');
 
-  if (user.user_metadata.volunteer) return <></>;
+  if (user.roles.volunteer) return <></>;
 
   return (
     <FormControl>
@@ -46,5 +46,5 @@ Volunteer.propTypes = {
   user: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
 };
-Volunteer.provides = ['user_metadata.volunteer', '_meta.volunteer_code'];
+Volunteer.provides = ['roles.volunteer', '_meta.volunteer_code'];
 export default Volunteer;

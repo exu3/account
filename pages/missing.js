@@ -9,15 +9,13 @@ import Page from '../components/Page';
 import ProfileBlocks from '../components/ProfileBlocks';
 import SubmitUpdates from '../components/SubmitUpdates';
 import { userFromJwt } from '../utils/profile';
+import refreshUser from '../utils/refresh-user';
 
 const { publicRuntimeConfig } = getConfig();
 
 export const getServerSideProps = async ({ query }) => {
   const jwtUser = userFromJwt(query.token);
-  // eslint-disable-next-line global-require
-  const { managementApi } = require('../lib/auth0');
-  const id = jwtUser.user_id;
-  const user = await managementApi.getUser({ id }); // Get the latest profile (OAuth only returns the profile at login)
+  const user = await refreshUser(jwtUser.user_id);
 
   return {
     props: {
@@ -33,7 +31,7 @@ const Missing = ({ user, state, token }) => {
   if (!user.username) missingInfo.push('username');
   if (!user.user_metadata.pronoun) missingInfo.push('user_metadata.pronoun');
   if (!user.user_metadata.accept_tos) missingInfo.push('user_metadata.accept_tos');
-  if (!user.user_metadata.volunteer) missingInfo.push('user_metadata.volunteer');
+  if (!user.roles.volunteer) missingInfo.push('roles.volunteer');
 
   const [request, setRequest] = useState();
   const [error, setError] = useState();

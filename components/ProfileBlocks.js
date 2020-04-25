@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import merge from 'deepmerge';
+import Box from '@codeday/topo/Box';
 import getPropertyComponents from './ProfileProperty';
 
 const ProfileBlocks = ({ user, fields, onChange }) => {
@@ -17,11 +18,16 @@ const ProfileBlocks = ({ user, fields, onChange }) => {
         const result = { _: {} };
         return {
           result,
-          element: React.createElement(component, {
-            user,
-            key: Array.isArray(component.provides) ? component.provides[0] : component.provides,
-            onChange: dispatchChange,
-          }),
+          element: (
+            <Box paddingBottom="2" key={Array.isArray(component.provides) ? component.provides[0] : component.provides}>
+              {
+                React.createElement(component, {
+                  user,
+                  onChange: dispatchChange,
+                })
+              }
+            </Box>
+          ),
         };
       }));
   }, [user, JSON.stringify(fields)]);
