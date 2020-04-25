@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Head from 'next/head';
 import Text, { Heading } from '@codeday/topo/Text';
 import Box from '@codeday/topo/Box';
 import Button from '@codeday/topo/Button';
@@ -43,6 +44,9 @@ const User = ({ user, sites }) => {
   const [request, setRequest] = useState({});
   return (
     <Page isLoggedIn>
+      <Head>
+        <title>CodeDay Account</title>
+      </Head>
       <Text>
         <WavingHand /> Welcome back, <Text bold as="span">{user.given_name}!</Text> Here are some things you can access
         with your CodeDay account:

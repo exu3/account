@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import getConfig from 'next/config';
+import Head from 'next/head';
 import Box from '@codeday/topo/Box';
 import Text from '@codeday/topo/Text';
 import Alert, { Title as AlertTitle, Icon as AlertIcon } from '@codeday/topo/Alert';
@@ -38,6 +39,9 @@ const Missing = ({ user, state, token }) => {
 
   return (
     <Page>
+      <Head>
+        <title>Missing Info ~ CodeDay Account</title>
+      </Head>
       {!error
         ? (
           <Text marginTop={0}>
