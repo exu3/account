@@ -61,7 +61,7 @@ const Missing = ({ user, state, token }) => {
       />
       <Box>
         <SubmitUpdates
-          required={missingInfo.filter((e) => e !== 'user_metadata.volunteer')}
+          required={missingInfo.filter((e) => e !== 'roles.volunteer')}
           user={user}
           token={token}
           request={request}
