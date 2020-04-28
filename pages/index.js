@@ -93,6 +93,35 @@ const User = ({ user, sites }) => {
           request={request}
           onError={setError}
         />
+        <Box marginTop="3">
+          <Button
+            as="a"
+            href="/api/password"
+            size="xs"
+            marginRight="3"
+          >
+            Change Password
+          </Button>
+          {user.enrollments.length > 0
+            ? (
+              <Button
+                as="a"
+                href="/api/no-mfa"
+                size="xs"
+              >
+                Turn Off 2-Factor Auth
+              </Button>
+            ) : (
+              <Button
+                as="a"
+                href="/api/mfa"
+                target="_blank"
+                size="xs"
+              >
+                Add 2-Factor Auth
+              </Button>
+            )}
+        </Box>
       </Box>
     </Page>
   );
