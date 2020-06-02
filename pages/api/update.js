@@ -14,6 +14,13 @@ const clearUndefined = (obj) => {
   return obj;
 };
 
+const formatName = (format, given, family) => {
+  if (format === 'initials') return `${given ? given[0].toUpperCase() : ''}${family ? family[0].toUpperCase() : ''}`;
+  if (format === 'given') return given;
+  if (format === 'short') return `${given}${family ? ` ${family[0].toUpperCase()}` : ''}`;
+  return `${given} ${family}`;
+};
+
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const cleanUpdates = (originalUser, originalBody) => {
   const body = JSON.parse(JSON.stringify(originalBody));
@@ -60,12 +67,16 @@ const cleanUpdates = (originalUser, originalBody) => {
   }
 
   // If we're changing the given_name or family_name, also update name, otherwise disable name changes.
-  if (body.given_name || body.family_name) {
-    body.name = `${body.given_name} ${body.family_name}`; // TODO: Internationalize this ordering somehow?
+  if (body.given_name || body.family_name || body.user_metadata.display_name_format) {
+    body.name = formatName(
+      body.user_metadata.display_name_format || 'short',
+      body.given_name || user.given_name,
+      body.family_name || user.family_name
+    );
   } else delete body.name;
 
   const metadata = clearUndefined(Object.keys(body.user_metadata)
-    .filter((k) => ['pronoun', 'accept_tos', 'phone_number'].includes(k))
+    .filter((k) => ['pronoun', 'accept_tos', 'phone_number', 'display_name_format'].includes(k))
     // eslint-disable-next-line no-param-reassign
     .reduce((accum, k) => { accum[k] = body.user_metadata[k]; return accum; }, {}));
 

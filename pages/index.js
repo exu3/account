@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import merge from 'deepmerge';
 import Text, { Heading } from '@codeday/topo/Text';
 import Box from '@codeday/topo/Box';
 import Button from '@codeday/topo/Button';
@@ -74,12 +75,13 @@ const User = ({ user, sites }) => {
         </Alert>
       )}
       <ProfileBlocks
-        user={user}
+        user={merge(user, request)}
         fields={[
           'username',
           'picture',
           'given_name',
           'family_name',
+          'user_metadata.display_name_format',
           'user_metadata.pronoun',
           'user_metadata.phone_number',
           'roles.volunteer',

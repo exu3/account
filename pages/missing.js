@@ -32,6 +32,7 @@ const Missing = ({ user, state, token }) => {
   if (!user.username) missingInfo.push('username');
   if (!user.given_name) missingInfo.push('given_name');
   if (!user.family_name) missingInfo.push('family_name');
+  if (!user.user_metadata.display_name_format) missingInfo.push('user_metadata.display_name_format');
   if (user.roles.volunteer && !user.user_metadata.phone_number) missingInfo.push('user_metadata.phone_number');
   if (!user.user_metadata.pronoun) missingInfo.push('user_metadata.pronoun');
   if (!user.user_metadata.accept_tos) missingInfo.push('user_metadata.accept_tos');
