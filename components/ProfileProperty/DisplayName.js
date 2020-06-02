@@ -5,10 +5,7 @@ import Radio, { Group } from '@codeday/topo/Input/Radio';
 import FormControl, { Label } from '@codeday/topo/FormControl';
 
 const Name = ({ user, onChange }) => {
-  const [displayNameFormat, setDisplayNameFormat] = useState(
-    user.user_metadata.display_name_format
-      || (user.roles.volunteer || user.roles.employee) ? 'full' : 'short'
-  );
+  const [displayNameFormat, setDisplayNameFormat] = useState(user.user_metadata.display_name_format);
 
   return (
     <FormControl>
