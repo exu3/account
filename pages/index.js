@@ -33,8 +33,9 @@ export const getServerSideProps = async ({ req, res }) => {
       user,
       sites: await getSites([
         'Student',
-        user.roles.volunteer && 'Volunteer',
+        (user.roles.volunteer || user.roles.staff) && 'Volunteer',
         user.roles.employee && 'Employee',
+        user.roles.devops && 'Devops',
       ]),
     },
   };
@@ -49,12 +50,36 @@ const User = ({ user, sites }) => {
         <title>CodeDay Account</title>
       </Head>
       <Text>
-        <WavingHand /> Welcome back, <Text bold as="span">{user.given_name}!</Text> Here are some things you can access
+        <WavingHand /> Welcome back,
+        <Text bold as="span">
+          {user.given_name}
+          {' '}
+          <Box
+            as="span"
+            borderRadius={4}
+            paddingLeft={1}
+            paddingRight={1}
+            d={(user.roles.volunteer || user.roles.staff || user.roles.employee) ? 'inline-block' : 'none'}
+            fontSize="xs"
+            fontWeight="bold"
+            backgroundColor={((user.roles.employee || user.roles.staff) && 'red.600') || 'blue.500'}
+            color="white"
+            position="relative"
+            top="-2px"
+          >
+            {
+              (user.roles.employee && 'Employee')
+              || (user.roles.staff && 'Staff')
+              || (user.roles.volunteer && 'Volunteer')
+            }
+          </Box>
+        </Text>, here are some things you can access
         with your CodeDay account:
       </Text>
       <Box paddingTop={4} paddingBottom={4}>
         {sites.map((site) => (
           <Button
+            key={site.link}
             marginRight={3}
             marginBottom={3}
             as="a"

@@ -10,6 +10,8 @@ export default async (id) => {
   user.roles = {
     volunteer: roles.includes('Volunteer'), // || roles.includes('Employee') || roles.includes('Employee - Full-Time');
     employee: roles.includes('Employee') || roles.includes('Employee - Full-Time'),
+    staff: roles.includes('Staff'),
+    devops: roles.includes('Devops'),
   };
 
   user.enrollments = enrollments;
