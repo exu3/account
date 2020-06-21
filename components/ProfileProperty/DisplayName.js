@@ -19,12 +19,12 @@ const Name = ({ user, onChange }) => {
           }}
         >
           <Radio value="initials">
-            {user.given_name && user.given_name[0].toUpperCase()}
-            {user.family_name && user.family_name[0].toUpperCase()}
+            {user.given_name ? user.given_name[0].toUpperCase() : 'First Initial'}{' '}
+            {user.family_name ? user.family_name[0].toUpperCase() : 'Last Initial'}
           </Radio>
-          <Radio value="given">{user.given_name}</Radio>
-          <Radio value="short">{user.given_name} {user.family_name && user.family_name[0].toUpperCase()}</Radio>
-          <Radio value="full">{user.given_name} {user.family_name}</Radio>
+          <Radio value="given">{user.given_name || 'First Name'}</Radio>
+          <Radio value="short">{user.given_name || 'First Name'} {user.family_name ? user.family_name[0].toUpperCase() : 'Last Initial'}</Radio>
+          <Radio value="full">{user.given_name || 'First Name'} {user.family_name || 'Last Name'}</Radio>
         </Group>
       </Grid>
     </FormControl>
