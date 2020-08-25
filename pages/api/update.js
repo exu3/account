@@ -78,7 +78,7 @@ const cleanUpdates = (originalUser, existingRoles, originalBody) => {
   // Only volunteers can set titles.
   if (roles.includes(serverRuntimeConfig.auth0.volunteerRole)
         || existingRoles.map((r) => r.id).includes(serverRuntimeConfig.auth0.volunteerRole)) {
-    if (!body.user_metadata.title) {
+    if (!body.user_metadata.title && !user.user_metadata.title) {
       body.user_metadata.title = 'Volunteer';
     }
   } else {
