@@ -109,6 +109,8 @@ const User = ({ user, sites }) => {
           'user_metadata.display_name_format',
           'user_metadata.pronoun',
           'user_metadata.phone_number',
+          'user_metadata.bio',
+          ...(user.roles.volunteer ? ['user_metadata.title'] : []),
           'roles.volunteer',
         ]}
         onChange={setRequest}

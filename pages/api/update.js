@@ -22,7 +22,7 @@ const formatName = (format, given, family) => {
 };
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
-const cleanUpdates = (originalUser, originalBody) => {
+const cleanUpdates = (originalUser, existingRoles, originalBody) => {
   const body = JSON.parse(JSON.stringify(originalBody));
   const user = JSON.parse(JSON.stringify(originalUser));
   if (!body.user_metadata) body.user_metadata = {};
@@ -75,8 +75,18 @@ const cleanUpdates = (originalUser, originalBody) => {
     );
   } else delete body.name;
 
+  // Only volunteers can set titles.
+  if (roles.includes(serverRuntimeConfig.auth0.volunteerRole)
+        || existingRoles.map((r) => r.id).includes(serverRuntimeConfig.auth0.volunteerRole)) {
+    if (!body.user_metadata.title) {
+      body.user_metadata.title = 'Volunteer';
+    }
+  } else {
+    body.user_metadata.title = null;
+  }
+
   const metadata = clearUndefined(Object.keys(body.user_metadata)
-    .filter((k) => ['pronoun', 'accept_tos', 'phone_number', 'display_name_format'].includes(k))
+    .filter((k) => ['pronoun', 'accept_tos', 'phone_number', 'display_name_format', 'title', 'bio'].includes(k))
     // eslint-disable-next-line no-param-reassign
     .reduce((accum, k) => { accum[k] = body.user_metadata[k]; return accum; }, {}));
 
@@ -95,14 +105,17 @@ export default async (req, res) => {
     ? userFromJwt(jwt).user_id
     : (await loginApi.getSession(req)).user.sub;
 
-  const user = await managementApi.getUser({ id: userId });
+  const [user, userRoles] = await Promise.all([
+    managementApi.getUser({ id: userId }),
+    managementApi.getUserRoles({ id: userId }),
+  ]);
 
   // Get the updates
   let data;
   let metadata;
   let roles;
   try {
-    ({ data, metadata, roles } = cleanUpdates(user, body));
+    ({ data, metadata, roles } = cleanUpdates(user, userRoles, body));
   } catch (ex) {
     return res.status(400).send({ error: ex.message });
   }
