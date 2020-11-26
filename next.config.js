@@ -6,6 +6,7 @@ module.exports = {
       hookSharedSecret: process.env.AUTH0_HOOK_SHARED_SECRET,
       managementDomain: process.env.AUTH0_MANAGEMENT_DOMAIN,
       volunteerRole: process.env.AUTH0_VOLUNTEER_ROLE,
+      mentorRole: process.env.AUTH0_MENTOR_ROLE,
     },
     uploader: {
       url: process.env.UPLOADER_URL,
@@ -18,6 +19,7 @@ module.exports = {
     },
     appSecret: process.env.APP_SECRET,
     volunteerCode: process.env.VOLUNTEER_CODE,
+    mentorCode: process.env.MENTOR_CODE,
   },
   publicRuntimeConfig: {
     auth0: {

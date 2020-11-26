@@ -63,6 +63,8 @@ const cleanUpdates = (originalUser, existingRoles, originalBody) => {
   if (body._meta && body._meta.volunteer_code) {
     if (serverRuntimeConfig.volunteerCode.split(/,/g).includes(body._meta.volunteer_code)) {
       roles.push(serverRuntimeConfig.auth0.volunteerRole);
+    } else if (serverRuntimeConfig.mentorCode.split(/,/g).includes(body._meta.volunteer_code)) {
+      roles.push(serverRuntimeConfig.auth0.mentorRole);
     } else throw new Error(`${body._meta.volunteer_code} is not a volunteer code.`);
   }
 
