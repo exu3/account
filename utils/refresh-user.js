@@ -12,6 +12,7 @@ export default async (id) => {
     employee: roles.includes('Employee') || roles.includes('Employee - Full-Time'),
     staff: roles.includes('Staff'),
     devops: roles.includes('Devops'),
+    mentor: roles.includes('Mentor') || roles.includes('Virtual CodeDay Mentor'),
   };
 
   user.enrollments = enrollments;

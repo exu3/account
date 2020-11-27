@@ -10,6 +10,7 @@ const Volunteer = ({ user, onChange }) => {
   const [volunteerCode, setVolunteerCode] = useState('');
 
   if (user.roles.volunteer) return <></>;
+  if (user.roles.mentor) return <></>;
 
   return (
     <FormControl>
