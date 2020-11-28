@@ -50,7 +50,7 @@ const User = ({ user, sites }) => {
         <title>CodeDay Account</title>
       </Head>
       <Text>
-        <WavingHand /> Welcome back,
+        <WavingHand /> Welcome back, 
         <Text bold as="span">
           {user.given_name}
           {' '}
