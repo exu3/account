@@ -1,0 +1,30 @@
+query MissingUserQuery($id: ID!) {
+  account {
+    getUser(where: { id: $id }, fresh: true) {
+      id
+      username
+      picture
+      givenName
+      familyName
+      name
+      displayNameFormat
+      pronoun
+      phoneNumber
+      bio
+      badges {
+        id
+        displayed
+        order
+        details {
+          name
+          emoji
+        }
+      }
+      acceptTos
+      roles {
+        id
+        name
+      }
+    }
+  }
+}
