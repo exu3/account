@@ -90,7 +90,7 @@ const Picture = ({ user, onChange, token }) => {
 Picture.propTypes = {
   user: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
-  token: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
 };
 Picture.provides = 'picture';
 export default Picture;

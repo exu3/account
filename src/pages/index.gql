@@ -11,6 +11,7 @@ query IndexUserQuery {
       pronoun
       phoneNumber
       bio
+      title
       badges {
         id
         displayed
