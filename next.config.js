@@ -18,6 +18,7 @@ module.exports = {
       token: process.env.CONTENTFUL_TOKEN,
     },
     appSecret: process.env.APP_SECRET,
+    graphSecret: process.env.GRAPH_SECRET,
     volunteerCode: process.env.VOLUNTEER_CODE,
     mentorCode: process.env.MENTOR_CODE,
   },
