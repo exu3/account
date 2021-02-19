@@ -1,0 +1,16 @@
+mutation UpdateUserProfileMutation ($updates: AccountUpdateUserInput!) {
+  account {
+    updateUser(updates: $updates)
+  }
+}
+mutation AddRoleWithCodeMutation ($code: String!) {
+  account {
+    addRoleByCode(code: $code where: {})
+  }
+}
+
+mutation SetDisplayedBadgesMutation ($badges: [AccountDisplayedUserBadgeInput!]) {
+  account {
+    setDisplayedBadges(badges: $badges)
+  }
+}

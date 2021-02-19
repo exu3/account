@@ -1,0 +1,36 @@
+query IndexUserQuery {
+  account {
+    getUser(where: { id: "" }, fresh: true) {
+      id
+      username
+      picture
+      givenName
+      familyName
+      name
+      displayNameFormat
+      pronoun
+      phoneNumber
+      bio
+      title
+      badges {
+        id
+        displayed
+        order
+        details {
+          name
+          emoji
+        }
+      }
+      roles {
+        id
+        name
+        description
+      }
+      sites {
+        link
+        title
+      }
+      acceptTos
+    }
+  }
+}
