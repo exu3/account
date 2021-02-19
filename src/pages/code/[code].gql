@@ -1,0 +1,5 @@
+mutation AddRole ($code: String!) {
+  account {
+    addRoleByCode(where: {}, code: $code)
+  }
+}
