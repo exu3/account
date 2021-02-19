@@ -5,11 +5,7 @@ module.exports = {
       clientSecret: process.env.AUTH0_CLIENT_SECRET,
       managementDomain: process.env.AUTH0_MANAGEMENT_DOMAIN,
       hookSharedSecret: process.env.AUTH0_HOOK_SHARED_SECRET,
-      volunteerRole: process.env.AUTH0_VOLUNTEER_ROLE_ID,
-      mentorRole: process.env.AUTH0_MENTOR_ROLE_ID,
     },
-    volunteerCode: process.env.VOLUNTEER_CODE,
-    mentorCode: process.env.MENTOR_CODE,
   },
   publicRuntimeConfig: {
     appUrl: process.env.APP_URL,

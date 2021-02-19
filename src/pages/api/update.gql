@@ -3,9 +3,9 @@ mutation UpdateUserProfileMutation ($updates: AccountUpdateUserInput!) {
     updateUser(updates: $updates)
   }
 }
-mutation AddRoleToUserMutation ($id: ID!, $roleId: ID!) {
+mutation AddRoleWithCodeMutation ($code: String!) {
   account {
-    addRole(id: $id, roleId: $roleId)
+    addRoleByCode(code: $code where: {})
   }
 }
 

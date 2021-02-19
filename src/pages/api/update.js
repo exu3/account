@@ -1,5 +1,5 @@
 import { tryAuthenticatedApiQuery } from "../../util/api";
-import { UpdateUserProfileMutation, AddRoleToUserMutation, SetDisplayedBadgesMutation } from './update.gql';
+import { UpdateUserProfileMutation, SetDisplayedBadgesMutation, AddRoleWithCodeMutation } from './update.gql';
 import getConfig from 'next/config';
 import jwt from 'jsonwebtoken';
 import phone from 'phone';
@@ -15,19 +15,12 @@ export default async (req, res) => {
     let updates = body;
     delete updates._meta
     if (updates.addRole) {
-        if (serverRuntimeConfig.volunteerCode.split(/,/g).includes(updates.addRole)) {
-            let { result, error } = await tryAuthenticatedApiQuery(AddRoleToUserMutation, { id: "", roleId: serverRuntimeConfig.auth0.volunteerRole }, token);
-            if (error) {
-                return res.status(400).send({ error: "There was an error while giving you the volunteer role." });
-            }
-            delete updates.addRole
-        } else if (serverRuntimeConfig.mentorCode.split(/,/g).includes(updates.addRole)) {
-            let { result, error } = await tryAuthenticatedApiQuery(AddRoleToUserMutation, { id: "", roleId: serverRuntimeConfig.auth0.mentorRole }, token);
-            if (error) {
-                return res.status(400).send({ error: "There was an error while giving you the mentor role." });
-            }
-            delete updates.addRole
-        } else return res.status(400).send({ error: `${updates.addRole} is not a volunteer code.` });
+        let { result, error } = await tryAuthenticatedApiQuery(AddRoleWithCodeMutation, { where: {}, code: updates.addRole }, token);
+        if (error) {
+            console.log(error)
+            return res.status(400).send({ error: `${updates.addRole} is not a volunteer code.` });
+        }
+        delete updates.addRole
     }
     if (updates.badges) {
         updates.badges = updates.badges.filter((el) => el.displayed)
