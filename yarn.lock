@@ -2295,6 +2295,11 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
+discord-oauth2@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/discord-oauth2/-/discord-oauth2-2.6.0.tgz#d362b386e77a3eb3135772307a253514e0dc48be"
+  integrity sha512-9lEt1Rp9rruFPiVQOPbe2rKJXB40fO2u9Ozjz3n/TlVYnIxCTeohVkNI/c5AoLFDZcSxFc2MtDTf9iG0X7BkRg==
+
 doctrine@1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-1.5.0.tgz#379dce730f6166f76cefa4e6707a159b02c5a6fa"
@@ -4701,11 +4706,6 @@ node-html-parser@1.4.9:
   integrity sha512-UVcirFD1Bn0O+TSmloHeHqZZCxHjvtIeGdVdGMhyZ8/PWlEiZaZ5iJzR189yKZr8p0FXN58BUeC7RHRkf/KYGw==
   dependencies:
     he "1.2.0"
-
-node-fetch@^2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
-  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
 node-libs-browser@^2.2.1:
   version "2.2.1"

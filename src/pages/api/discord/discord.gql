@@ -1,0 +1,21 @@
+mutation LinkDiscordMutation ($discordId: String!, $userId: ID!) {
+  account {
+    linkDiscord(userId: $userId, discordId: $discordId)
+  }
+}
+
+query CheckCodeDayLinked ($discordId: String!) {
+  account { 
+    getUser (where: {discordId: $discordId}, fresh: true) {
+      discordId
+    }
+  }
+}
+
+query CheckDiscordLinked ($userId: ID!) {
+  account { 
+    getUser (where: {id: $userId}, fresh: true) {
+      discordId
+    }
+  }
+}

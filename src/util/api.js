@@ -14,3 +14,17 @@ export async function tryAuthenticatedApiQuery(gql, params, token) {
     return { error: err };
   }
 }
+
+export async function tryAuthenticatedServerApiQuery(gql, params, token) {
+  const headers = {
+    'Authorization': `Bearer ${token}`,
+  };
+
+  try {
+    return {
+      result: await apiFetch(print(gql), params || {}, token ? headers : {}),
+    };
+  } catch (err) {
+    return { error: err };
+  }
+}
