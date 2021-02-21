@@ -18,12 +18,11 @@ export default async (req, res) => {
   const {id: discordId} = await discordApi.getUser(access_token)
   const { result, error } = await tryAuthenticatedServerApiQuery(CheckCodeDayLinked, { discordId })
   if (result.account.getUser) {
-    res.send("That Discord account is already linked to a CodeDay account!")
+    res.redirect('/discord/error?code=discordalreadylinked');
     return
   }
-  console.log(result)
   const userId = await (await getSession({ req })).user.id
   const token = jwt.sign({scopes: "write:users"}, serverRuntimeConfig.gqlAccountSecret, {expiresIn: "1m"})
   await tryAuthenticatedServerApiQuery(LinkDiscordMutation, { discordId, userId }, token)
-  res.redirect(`/`);
+  res.redirect(`/discord/success`);
 };
