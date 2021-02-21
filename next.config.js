@@ -11,7 +11,7 @@ module.exports = {
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
       redirectUri: process.env.DISCORD_REDIRECT_URI,
     },
-    gqlAccountSecret: process.env.GQL_ACCOUNT_SECRET,
+    gqlAccountSecret: process.env.GRAPH_SECRET,
   },
   publicRuntimeConfig: {
     appUrl: process.env.APP_URL,
