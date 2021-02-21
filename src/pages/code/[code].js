@@ -3,8 +3,9 @@ import React from 'react';
 import getConfig from 'next/config';
 import Head from 'next/head';
 import Text from '@codeday/topo/Atom/Text';
+import Button from '@codeday/topo/Atom/Button';
 import Page from '../../components/Page';
-import { getSession } from 'next-auth/client';
+import { getSession, signIn } from 'next-auth/client';
 import jwt from 'jsonwebtoken';
 import { tryAuthenticatedApiQuery } from '../../util/api';
 
@@ -18,9 +19,8 @@ export const getServerSideProps = async ({ req, params }) => {
   let success = false;
   const token = jwt.sign({ id: session.user?.id }, serverRuntimeConfig.auth0.hookSharedSecret)
   let { result, error } = await tryAuthenticatedApiQuery(AddRole, {code: params.code}, token);
-  console.log(result)
   if (result && !error) success = true;
-  
+
   return {
     props: {
       success
