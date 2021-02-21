@@ -9,11 +9,12 @@ import Volunteer from './Volunteer';
 import Title from './Title';
 import CodeOfConduct from './CodeOfConduct';
 import Badges from './Badges';
+import Discord from './Discord'
 
 export {
-  Username, Picture, Name, DisplayName, Pronoun, Phone, Bio, Volunteer, Title, CodeOfConduct, Badges,
+  Username, Picture, Name, DisplayName, Pronoun, Phone, Bio, Volunteer, Title, CodeOfConduct, Badges, Discord
 };
-const allExports = [Username, Picture, Name, DisplayName, Pronoun, Phone, Bio, Volunteer, Title, CodeOfConduct, Badges];
+const allExports = [Username, Picture, Name, DisplayName, Pronoun, Phone, Bio, Volunteer, Title, CodeOfConduct, Badges, Discord];
 
 const UserProperty = (fields) => {
   let seenProviders = [];

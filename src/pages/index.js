@@ -42,9 +42,9 @@ export default function Home({ user, token, logIn }) {
       <WelcomeHeader user={user}></WelcomeHeader>
       <Divider />
       <Heading as="h2" size="lg" paddingTop={4}>Update Your Account</Heading>
-      <UserProperties token={token} user={merge(user, changes)} fields={["username", "picture", 'familyName', 'givenName', "displayNameFormat", "pronoun", (user.badges ? "badges" : null), "phoneNumber", "bio", "volunteer", (user.roles.find((role) => role.name === "Volunteer") ? "title" : null),]} onChange={setChanges}></UserProperties>
+      <UserProperties token={token} user={merge(user, changes)} fields={["username", "picture", 'familyName', 'givenName', "displayNameFormat", "pronoun", (user.badges ? "badges" : null), "phoneNumber", "bio", "volunteer", (user.roles.find((role) => role.name === "Volunteer") ? "title" : null), "discord"]} onChange={setChanges}></UserProperties>
       <Box textAlign="right">
-        <SubmitUpdates token={token} signedIn={true} user={user} changes={changes} required={['username', 'givenName', 'familyName', 'pronoun']} onSubmit={onSubmit} />
+        <SubmitUpdates token={token} user={user} changes={changes} required={['username', 'givenName', 'familyName', 'pronoun']} onSubmit={onSubmit} />
         <Box marginTop="3">
           <Button
             as="a"

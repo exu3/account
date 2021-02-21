@@ -1,0 +1,5 @@
+mutation UnlinkDiscordMutation {
+  account {
+    unlinkDiscord(userId: "")
+  }
+}
