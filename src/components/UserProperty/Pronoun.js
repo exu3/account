@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from '@codeday/topo/Atom/Input/Text';
-import FormControl, { Label } from '@codeday/topo/Molecule/FormControl';
+import FormControl, { Label } from '@codeday/topo/Atom/Form';
 import Text, { Link } from '@codeday/topo/Atom/Text';
-import Radio, { Group } from '@codeday/topo/Atom/Input/Radio';
+import Radio, { Group, Stack } from '@codeday/topo/Atom/Input/Radio';
 
 const CUSTOM = 'custom';
 const defaultPronouns = {
@@ -59,7 +59,7 @@ const Pronoun = ({ user, onChange }) => {
       <Group
         value={selection}
         onChange={(e) => {
-          const newSelection = e.target.value;
+          const newSelection = e;
           setSelection(newSelection);
           if (newSelection === CUSTOM) {
             onChange({ pronoun: custom });
@@ -68,7 +68,9 @@ const Pronoun = ({ user, onChange }) => {
           }
         }}
       >
-        {[...defaultRadios, customRadio]}
+        <Stack>
+          {[...defaultRadios, customRadio]}
+        </Stack>
       </Group>
     </FormControl>
   );

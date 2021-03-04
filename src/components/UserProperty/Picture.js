@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Image from '@codeday/topo/Atom/Image';
 import Spinner from '@codeday/topo/Atom/Spinner';
 import { useToasts } from '@codeday/topo/utils';
-import FormControl, { Label, HelpText } from '@codeday/topo/Molecule/FormControl'
+import FormControl, { Label, HelpText } from '@codeday/topo/Atom/Form'
 import { tryAuthenticatedApiQuery } from '../../util/api';
 import { UserPictureMutation } from "./Picture.gql"
 
@@ -33,7 +33,7 @@ const Picture = ({ user, onChange, token }) => {
             <Image
               src={pictureUrl}
               rounded="full"
-              size="100px"
+              height="100px"
               onClick={() => uploaderRef.current.click()}
             />
             <input

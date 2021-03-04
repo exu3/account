@@ -17,13 +17,14 @@ import jwt from 'jsonwebtoken';
 import Link from '@codeday/topo/Atom/Text/Link';
 import { getSession } from 'next-auth/client';
 import { signIn } from 'next-auth/client';
+import { codedayTheme as theme, useColorMode } from "@codeday/topo/Theme"
 
 const { serverRuntimeConfig } = getConfig();
 
 export default function Home({ user, token, logIn }) {
 
   if (logIn) return <Page><Button onClick={() => signIn('auth0')}>Sign in to CodeDay</Button></Page>
-
+  const { colorMode, toggleColorMode } = useColorMode()
   const [changes, setChanges] = useState({});
   const router = useRouter();
   const onSubmit = () => {
@@ -47,6 +48,12 @@ export default function Home({ user, token, logIn }) {
         <SubmitUpdates token={token} user={user} changes={changes} required={['username', 'givenName', 'familyName', 'pronoun']} onSubmit={onSubmit} />
         <Box marginTop="3">
           <Button
+            size="xs"
+            onClick={toggleColorMode}
+          >
+            Toggle {colorMode === "light" ? "Dark" : "Light"}
+          </Button>
+          <Button
             as="a"
             href="/api/password"
             size="xs"
@@ -67,8 +74,9 @@ export async function getServerSideProps({ req }) {
   }
   const token = jwt.sign({ id: session.user?.id }, serverRuntimeConfig.auth0.hookSharedSecret)
   let { result, error } = await tryAuthenticatedApiQuery(IndexUserQuery, {}, token);
+  console.log(error)
   if (error) return { props: {} }
-  
+
   return {
     props: {
       user: result?.account?.getUser || null,

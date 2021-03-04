@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import TextArea from '@codeday/topo/Atom/Input/Textarea';
-import FormControl, { Label, HelpText } from '@codeday/topo/Molecule/FormControl'
+import FormControl, { Label, HelpText } from '@codeday/topo/Atom/Form'
 
 const Bio = ({ user, onChange }) => {
   const [bio, setBio] = useState(user.bio);

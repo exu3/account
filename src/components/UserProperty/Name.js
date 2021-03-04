@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from '@codeday/topo/Atom/Input/Text';
 import { Grid } from '@codeday/topo/Atom/Box';
-import FormControl, { Label } from '@codeday/topo/Molecule/FormControl'
+import FormControl, { Label } from '@codeday/topo/Atom/Form'
 
 const Name = ({ user, onChange }) => {
   const [familyName, setFamilyName] = useState(user.familyName);

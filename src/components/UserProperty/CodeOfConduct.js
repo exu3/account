@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from '@codeday/topo/Atom/Input/Checkbox';
-import FormControl, { Label, HelpText } from '@codeday/topo/Molecule/FormControl';
+import FormControl, { Label, HelpText } from '@codeday/topo/Atom/Form';
 import Text, { Link } from '@codeday/topo/Atom/Text';
 import List, { Item } from '@codeday/topo/Atom/List';
 

@@ -2,17 +2,10 @@ import React, { useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from '@codeday/topo/Atom/Box';
 import Button from '@codeday/topo/Atom/Button';
-import FormControl, { Label } from '../FormControl';
-import { Tooltip } from '@chakra-ui/core';
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverArrow,
-  PopoverCloseButton,
-} from "@chakra-ui/core"
+import FormControl, { Label } from '@codeday/topo/Atom/Form';
+import { Tooltip } from '@chakra-ui/react';
+// import { Popover, PopoverTrigger, PopoverArrow, PopoverContent, PopoverHeader, PopoverCloseButton, PopoverBody } from '@chakra-ui/react';
+import { Popover, PopoverTrigger, PopoverArrow, PopoverContent, PopoverHeader, PopoverCloseButton, PopoverBody } from '@codeday/topo/chakra-ui';
 
 const Badges = ({ user, onChange }) => {
   const [badges, setBadgeDisplayed] = useReducer((previousBadges, { id, displayed, order }) => {
@@ -43,7 +36,7 @@ const Badges = ({ user, onChange }) => {
             <PopoverTrigger>
               <Button width="18">{displayedBadge.details.emoji}</Button>
             </PopoverTrigger>
-            <PopoverContent zIndex="100">
+            <PopoverContent px="5px" py="5px">
               <PopoverArrow />
               <PopoverCloseButton />
               <PopoverHeader>Pick a badge to display!</PopoverHeader>
@@ -51,7 +44,6 @@ const Badges = ({ user, onChange }) => {
                 <Grid templateColumns="repeat(5, 1fr)" gap="1px" width="fit-content">
                   {badgesAlphabetical.map((badge) => (
                     <Badge badge={badge} disabled={badge.displayed ? true : false} key={badge.id} onClick={() => {
-                      // setBadgeDisplayed({ id: displayedBadge.id, displayed: false, order: index })
                       setBadgeDisplayed({ id: badge.id, displayed: true, order: index })
                       onChange({ badges })
                     }}></Badge>
@@ -70,7 +62,7 @@ const Badges = ({ user, onChange }) => {
             <PopoverTrigger>
               <Button width="18">❌</Button>
             </PopoverTrigger>
-            <PopoverContent zIndex="100">
+            <PopoverContent px="5px" py="5px">
               <PopoverArrow />
               <PopoverCloseButton />
               <PopoverHeader>Pick a badge to display!</PopoverHeader>
@@ -108,13 +100,13 @@ export default Badges;
 const Badge = ({ badge, disabled, onClick, onChange}) => {
   if (!badge) {
     return (
-      <Tooltip hasArrow isDisabled={disabled ? true : false} label="None" placement="auto" fontSize="md" zIndex="101">
+      <Tooltip hasArrow isDisabled={disabled ? true : false} label="None" placement="auto" fontSize="md">
           <Button width="18" disabled={disabled ? true : false} onClick={onClick} onChange={onChange}>❌</Button>
       </Tooltip>
     );
   }
   return (
-    <Tooltip hasArrow isDisabled={disabled ? true : false} label={badge.details.name} placement="auto" fontSize="md" zIndex="101">
+    <Tooltip hasArrow isDisabled={disabled ? true : false} label={badge.details.name} placement="auto" fontSize="md">
         <Button width="18" disabled={disabled ? true : false} onClick={onClick} onChange={onChange}>{badge.details.emoji}</Button>
     </Tooltip>
   );

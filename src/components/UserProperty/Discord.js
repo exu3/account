@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import FormControl, { Label, HelpText } from '@codeday/topo/Molecule/FormControl'
+import FormControl, { Label, HelpText } from '@codeday/topo/Atom/Form'
 import Image from '@codeday/topo/Atom/Image';
 import Box from '@codeday/topo/Atom/Box';
 import Text from '@codeday/topo/Atom/Text';
@@ -10,7 +10,7 @@ import { tryAuthenticatedApiQuery } from '../../util/api';
 import { useRouter } from 'next/router'
 import { useToasts } from '@codeday/topo/utils';
 import Link from '@codeday/topo/Atom/Text/Link';
-import { Popover, PopoverTrigger, PopoverArrow, PopoverContent, PopoverHeader, PopoverCloseButton, PopoverBody } from '@chakra-ui/core';
+import { Popover, PopoverTrigger, PopoverArrow, PopoverContent, PopoverHeader, PopoverCloseButton, PopoverBody } from '@chakra-ui/react';
 
 const unlinkDiscord = async (token) => {
   const { error } = await tryAuthenticatedApiQuery(UnlinkDiscordMutation, {}, token)
@@ -41,7 +41,7 @@ const Discord = ({ user, token }) => {
                 Unlink Discord account
               </Button>
             </PopoverTrigger>
-            <PopoverContent>
+            <PopoverContent background="white" px="5px" py="5px">
               <PopoverArrow />
               <PopoverCloseButton />
               <PopoverHeader>Confirmation!</PopoverHeader>
@@ -57,7 +57,7 @@ const Discord = ({ user, token }) => {
                   Yes
                 </Button>
                 <Button size="xs"
-                  variantColor="red"
+                  colorScheme="red"
                   style={{ width: "50%" }}
                   onClick={() => setIsPopoverOpen(false)}>
                   No
