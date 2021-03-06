@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@codeday/topo/Atom/Button';
-import Text, {  } from '@codeday/topo/Atom/Text';
+import Text from '@codeday/topo/Atom/Text';
 import WavingHand from '@codeday/topocons/Emoji/People/WavingHand';
 import Box from '@codeday/topo/Atom/Box';
 

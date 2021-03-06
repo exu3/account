@@ -10,7 +10,7 @@ import { tryAuthenticatedApiQuery } from '../../util/api';
 import { useRouter } from 'next/router'
 import { useToasts } from '@codeday/topo/utils';
 import Link from '@codeday/topo/Atom/Text/Link';
-import { Popover, PopoverTrigger, PopoverArrow, PopoverContent, PopoverHeader, PopoverCloseButton, PopoverBody } from '@chakra-ui/react';
+import Popover, { PopoverTrigger, PopoverArrow, PopoverContent, PopoverHeader, PopoverCloseButton, PopoverBody } from '@codeday/topo/Atom/Popover'
 
 const unlinkDiscord = async (token) => {
   const { error } = await tryAuthenticatedApiQuery(UnlinkDiscordMutation, {}, token)
@@ -41,7 +41,7 @@ const Discord = ({ user, token }) => {
                 Unlink Discord account
               </Button>
             </PopoverTrigger>
-            <PopoverContent background="white" px="5px" py="5px">
+            <PopoverContent>
               <PopoverArrow />
               <PopoverCloseButton />
               <PopoverHeader>Confirmation!</PopoverHeader>
@@ -56,8 +56,9 @@ const Discord = ({ user, token }) => {
                   }}>
                   Yes
                 </Button>
-                <Button size="xs"
-                  colorScheme="red"
+                <Button 
+                  size="xs"
+                  bg="red.600"
                   style={{ width: "50%" }}
                   onClick={() => setIsPopoverOpen(false)}>
                   No

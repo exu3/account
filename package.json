@@ -8,7 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@codeday/topo": "4.0.3",
+    "@codeday/topo": "4.0.4",
     "@codeday/topocons": "^1.3.0",
     "@emotion/core": "^10.0.28",
     "auth0": "^2.24.0",

@@ -14,7 +14,6 @@ const DisplayName = ({ user, onChange }) => {
         <Group
           value={displayNameFormat}
           onChange={(e) => {
-            console.log(e)
             setDisplayNameFormat(e);
             onChange({ displayNameFormat: e });
           }}

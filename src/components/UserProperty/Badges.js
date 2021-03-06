@@ -4,10 +4,17 @@ import { Grid } from '@codeday/topo/Atom/Box';
 import Button from '@codeday/topo/Atom/Button';
 import FormControl, { Label } from '@codeday/topo/Atom/Form';
 import { Tooltip } from '@chakra-ui/react';
-// import { Popover, PopoverTrigger, PopoverArrow, PopoverContent, PopoverHeader, PopoverCloseButton, PopoverBody } from '@chakra-ui/react';
-import { Popover, PopoverTrigger, PopoverArrow, PopoverContent, PopoverHeader, PopoverCloseButton, PopoverBody } from '@codeday/topo/chakra-ui';
+import Popover, { PopoverTrigger, PopoverArrow, PopoverContent, PopoverHeader, PopoverCloseButton, PopoverBody } from '@codeday/topo/Atom/Popover'
 
-const Badges = ({ user, onChange }) => {
+
+function areEqual(newProps, prevProps) {
+  if (JSON.stringify(newProps.user.badges) == JSON.stringify(prevProps.user.badges)) {
+    return true
+  }
+  return false
+}
+
+const Badges = React.memo(({ user, onChange }) => {
   const [badges, setBadgeDisplayed] = useReducer((previousBadges, { id, displayed, order }) => {
     if (displayed) {
       previousBadges.map((badge) => {
@@ -27,6 +34,7 @@ const Badges = ({ user, onChange }) => {
   const displayedBadges = badges.filter((b) => b.displayed == true).sort((a, b) => a.order - b.order) || []
   const badgesAlphabetical = [...badges].sort((a, b) => a.id.localeCompare(b.id))
 
+
   return (
     <FormControl>
       <Label fontWeight="bold">Which badges would you like to be displayed?</Label>
@@ -36,7 +44,7 @@ const Badges = ({ user, onChange }) => {
             <PopoverTrigger>
               <Button width="18">{displayedBadge.details.emoji}</Button>
             </PopoverTrigger>
-            <PopoverContent px="5px" py="5px">
+            <PopoverContent>
               <PopoverArrow />
               <PopoverCloseButton />
               <PopoverHeader>Pick a badge to display!</PopoverHeader>
@@ -46,12 +54,12 @@ const Badges = ({ user, onChange }) => {
                     <Badge badge={badge} disabled={badge.displayed ? true : false} key={badge.id} onClick={() => {
                       setBadgeDisplayed({ id: badge.id, displayed: true, order: index })
                       onChange({ badges })
-                    }}></Badge>
+                    }} />
                   ))}
                   <Badge badge={null} disabled={false} key="none" onClick={() => {
                     setBadgeDisplayed({ id: displayedBadge.id, displayed: false, order: index })
                     onChange({ badges })
-                  }}></Badge>
+                  }} />
                 </Grid>
               </PopoverBody>
             </PopoverContent>
@@ -62,7 +70,7 @@ const Badges = ({ user, onChange }) => {
             <PopoverTrigger>
               <Button width="18">❌</Button>
             </PopoverTrigger>
-            <PopoverContent px="5px" py="5px">
+            <PopoverContent>
               <PopoverArrow />
               <PopoverCloseButton />
               <PopoverHeader>Pick a badge to display!</PopoverHeader>
@@ -72,22 +80,21 @@ const Badges = ({ user, onChange }) => {
                     <Badge badge={badge} disabled={badge.displayed ? true : false} key={badge.id} onClick={() => {
                       setBadgeDisplayed({ id: badge.id, displayed: true, order: displayedBadges.length })
                       onChange({ badges })
-                    }}></Badge>
+                    }} />
                   ))}
                   <Badge badge={null} disabled={true} key="none" onClick={() => {
                     setBadgeDisplayed({ id: displayedBadge.id, displayed: false, order: displayedBadges.length })
                     onChange({ badges })
-                  }}></Badge>
+                  }} />
                 </Grid>
               </PopoverBody>
             </PopoverContent>
           </Popover>
         }
-
       </Grid>
     </FormControl>
   );
-}
+}, areEqual)
 
 Badges.propTypes = {
   user: PropTypes.object.isRequired,
@@ -95,19 +102,22 @@ Badges.propTypes = {
 };
 Badges.provides = 'badges';
 
-export default Badges;
-
-const Badge = ({ badge, disabled, onClick, onChange}) => {
+const Badge = ({ badge, disabled, onClick, onChange }) => {
   if (!badge) {
     return (
       <Tooltip hasArrow isDisabled={disabled ? true : false} label="None" placement="auto" fontSize="md">
-          <Button width="18" disabled={disabled ? true : false} onClick={onClick} onChange={onChange}>❌</Button>
+        <Button width="18" disabled={disabled ? true : false} onClick={onClick} onChange={onChange}>❌</Button>
       </Tooltip>
     );
   }
   return (
     <Tooltip hasArrow isDisabled={disabled ? true : false} label={badge.details.name} placement="auto" fontSize="md">
-        <Button width="18" disabled={disabled ? true : false} onClick={onClick} onChange={onChange}>{badge.details.emoji}</Button>
+      <Button width="18" disabled={disabled ? true : false} onClick={onClick} onChange={onChange}>{badge.details.emoji}</Button>
     </Tooltip>
   );
 }
+
+export default Badges;
+
+// export default React.memo(Badges, areEqual);
+// export default React.memo(Badges);

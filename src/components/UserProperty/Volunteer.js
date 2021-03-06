@@ -20,7 +20,7 @@ const Volunteer = ({ user, onChange }) => {
             : `What's your volunteer access code?`
         }
       </Label>
-      <Collapse isOpen={!isVisible}>
+      <Collapse in={!isVisible}>
         <Button
           size="xs"
           variant="outline"
@@ -29,7 +29,7 @@ const Volunteer = ({ user, onChange }) => {
           Yes, I&apos;m a volunteer!
         </Button>
       </Collapse>
-      <Collapse isOpen={isVisible}>
+      <Collapse in={isVisible}>
         <Input
           value={volunteerCode}
           onChange={(e) => {
