@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from '@codeday/topo/Atom/Box';
-import Radio, { Group } from '@codeday/topo/Atom/Input/Radio';
-import FormControl, { Label } from '@codeday/topo/Molecule/FormControl';
+import Radio, { Group, Stack } from '@codeday/topo/Atom/Input/Radio';
+import FormControl, { Label } from '@codeday/topo/Atom/Form';
 
 const DisplayName = ({ user, onChange }) => {
   const [displayNameFormat, setDisplayNameFormat] = useState(user.displayNameFormat);
@@ -14,17 +14,19 @@ const DisplayName = ({ user, onChange }) => {
         <Group
           value={displayNameFormat}
           onChange={(e) => {
-            setDisplayNameFormat(e.target.value);
-            onChange({ displayNameFormat: e.target.value });
+            setDisplayNameFormat(e);
+            onChange({ displayNameFormat: e });
           }}
         >
-          <Radio value="initials">
-            {user.givenName ? user.givenName[0].toUpperCase() : 'First Initial'}{' '}
-            {user.familyName ? user.familyName[0].toUpperCase() : 'Last Initial'}
-          </Radio>
-          <Radio value="given">{user.givenName || 'First Name'}</Radio>
-          <Radio value="short">{user.givenName || 'First Name'} {user.familyName ? user.familyName[0].toUpperCase() : 'Last Initial'}</Radio>
-          <Radio value="full">{user.givenName || 'First Name'} {user.familyName || 'Last Name'}</Radio>
+          <Stack>
+            <Radio value="initials">
+              {user.givenName ? user.givenName[0].toUpperCase() : 'First Initial'}{' '}
+              {user.familyName ? user.familyName[0].toUpperCase() : 'Last Initial'}
+            </Radio>
+            <Radio value="given">{user.givenName || 'First Name'}</Radio>
+            <Radio value="short">{user.givenName || 'First Name'} {user.familyName ? user.familyName[0].toUpperCase() : 'Last Initial'}</Radio>
+            <Radio value="full">{user.givenName || 'First Name'} {user.familyName || 'Last Name'}</Radio>
+          </Stack>
         </Group>
       </Grid>
     </FormControl>

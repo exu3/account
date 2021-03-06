@@ -24,7 +24,8 @@ const SubmitUpdates = ({ changes, user, required, onSubmit, token }) => {
   delete changes._meta
   return (
     <Button
-      variantColor="green"
+      bg="success.bg"
+      textColor="white"
       isDisabled={!changes || Object.keys(changes).length === 0 || !hasRequired(required, user, changes)}
       isLoading={isLoading}
       onClick={async () => {

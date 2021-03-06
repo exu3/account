@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Text from '@codeday/topo/Atom/Text';
 import Input from '@codeday/topo/Atom/Input/Text';
-import FormControl, { Label, HelpText } from '@codeday/topo/Molecule/FormControl'
+import FormControl, { Label, HelpText } from '@codeday/topo/Atom/Form'
 
 const Phone = ({ user, onChange }) => {
   const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);

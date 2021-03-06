@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from '@codeday/topo/Atom/Input/Text';
 import Button from '@codeday/topo/Atom/Button';
-import Collapse from '@chakra-ui/core/dist/Collapse';
-import FormControl, { Label, HelpText } from '@codeday/topo/Molecule/FormControl'
+import Collapse from '@codeday/topo/Molecule/Collapse';
+import FormControl, { Label, HelpText } from '@codeday/topo/Atom/Form'
 
 const Volunteer = ({ user, onChange }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -20,7 +20,7 @@ const Volunteer = ({ user, onChange }) => {
             : `What's your volunteer access code?`
         }
       </Label>
-      <Collapse isOpen={!isVisible}>
+      <Collapse in={!isVisible}>
         <Button
           size="xs"
           variant="outline"
@@ -29,7 +29,7 @@ const Volunteer = ({ user, onChange }) => {
           Yes, I&apos;m a volunteer!
         </Button>
       </Collapse>
-      <Collapse isOpen={isVisible}>
+      <Collapse in={isVisible}>
         <Input
           value={volunteerCode}
           onChange={(e) => {
