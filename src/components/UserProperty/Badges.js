@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Grid } from '@codeday/topo/Atom/Box';
 import Button from '@codeday/topo/Atom/Button';
 import FormControl, { Label } from '@codeday/topo/Atom/Form';
-import { Tooltip } from '@chakra-ui/react';
-import Popover, { PopoverTrigger, PopoverArrow, PopoverContent, PopoverHeader, PopoverCloseButton, PopoverBody } from '@codeday/topo/Atom/Popover'
+import Tooltip from '@codeday/topo/Atom/Tooltip';
+import Popover, { PopoverTrigger, PopoverArrow, PopoverContent, PopoverHeader, PopoverCloseButton, PopoverBody } from '@codeday/topo/Atom/Popover';
 
 
 function areEqual(newProps, prevProps) {
@@ -42,7 +42,7 @@ const Badges = React.memo(({ user, onChange }) => {
         {displayedBadges.map((displayedBadge, index) => (displayedBadge.displayed ?
           <Popover>
             <PopoverTrigger>
-              <Button width="18">{displayedBadge.details.emoji}</Button>
+              <Button width="18" textShadow="0 0 1px white, -1px -1px 1px white, -1px 1px 1px white, 1px 1px 1px white, 1px -1px 1px white">{displayedBadge.details.emoji}</Button>
             </PopoverTrigger>
             <PopoverContent>
               <PopoverArrow />
@@ -103,16 +103,16 @@ Badges.propTypes = {
 Badges.provides = 'badges';
 
 const Badge = ({ badge, disabled, onClick, onChange }) => {
-  if (!badge) {
-    return (
-      <Tooltip hasArrow isDisabled={disabled ? true : false} label="None" placement="auto" fontSize="md">
-        <Button width="18" disabled={disabled ? true : false} onClick={onClick} onChange={onChange}>❌</Button>
-      </Tooltip>
-    );
-  }
   return (
-    <Tooltip hasArrow isDisabled={disabled ? true : false} label={badge.details.name} placement="auto" fontSize="md">
-      <Button width="18" disabled={disabled ? true : false} onClick={onClick} onChange={onChange}>{badge.details.emoji}</Button>
+    <Tooltip isDisabled={disabled ? true : false} label={badge ? badge.details.name : "none"} placement="auto" fontSize="md">
+      <Button
+        width="18"
+        disabled={disabled ? true : false}
+        onClick={onClick}
+        onChange={onChange}
+        textShadow="0 0 1px white, -1px -1px 1px white, -1px 1px 1px white, 1px 1px 1px white, 1px -1px 1px white">
+        {badge ? badge.details.emoji : "❌"}
+      </Button>
     </Tooltip>
   );
 }
