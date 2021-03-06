@@ -22,13 +22,15 @@ export const getServerSideProps = async ({ req, res, query }) => {
   if (query.code == "discordalreadylinked") {
     return {
       props: {
-        message: "ERROR: That Discord account is already linked to a CodeDay account!"
+        message: "ERROR: That Discord account is already linked to a CodeDay account!",
+        cookies: req.headers.cookie ?? "",
       }
     }
   } else if (query.code == "codedayalreadylinked") {
     return {
       props: {
-        message: "ERROR: Your CodeDay account is already linked to a Discord account!"
+        message: "ERROR: Your CodeDay account is already linked to a Discord account!",
+        cookies: req.headers.cookie ?? "",
       }
     }
   } else {

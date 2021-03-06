@@ -83,6 +83,7 @@ export const getServerSideProps = async ({ req, query }) => {
       state: query.state,
       domain: publicRuntimeConfig?.auth0?.domain,
       token: token,
+      cookies: req.headers.cookie ?? "",
     },
   };
 };

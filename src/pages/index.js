@@ -76,11 +76,12 @@ export async function getServerSideProps({ req }) {
   let { result, error } = await tryAuthenticatedApiQuery(IndexUserQuery, {}, token);
   console.log(error)
   if (error) return { props: {} }
-
+  
   return {
     props: {
       user: result?.account?.getUser || null,
-      token
+      token,
+      cookies: req.headers.cookie ?? "",
     }
   };
 }

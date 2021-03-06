@@ -23,7 +23,8 @@ export const getServerSideProps = async ({ req, params }) => {
 
   return {
     props: {
-      success
+      success,
+      cookies: req.headers.cookie ?? "",
     }
   };
 };
