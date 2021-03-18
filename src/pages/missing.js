@@ -27,7 +27,7 @@ const Missing = ({ user, state, domain, token }) => {
   if (!user.acceptTos) missingInfo.push('acceptTos');
   if (user.roles) {
     if (user.roles.find((role) => role.name === "Volunteer") && !user.phoneNumber) missingInfo.push('phoneNumber');
-    if (!user.roles.find((role) => role.name === "Volunteer")) missingInfo.push('volunteer');
+    // if (!user.roles.find((role) => role.name === "Volunteer")) missingInfo.push('volunteer');
   }
 
   const [changes, setChanges] = useState({});
